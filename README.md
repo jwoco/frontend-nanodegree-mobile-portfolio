@@ -1,73 +1,60 @@
 ## Website Performance Optimization portfolio project
 
-Your challenge, if you wish to accept it (and we sure hope you will), is to optimize this online portfolio for speed! In particular, optimize the critical rendering path and make this page render as quickly as possible by applying the techniques you've picked up in the [Critical Rendering Path course](https://www.udacity.com/course/ud884).
+The project creates a portfolio site using Cameron Pittman's data. It also includes a web app,
+Cam's Pizzeria, thats you order a pizza with random ingredients.
 
-To get started, check out the repository, inspect the code,
+To run the site, got to http://jwoco.github.io/frontend-nanodegree-mobile-portfolio/, then run the index.html file.
 
-### Getting started
+To view Cam's Pizzeria, click the Cam's Pizzeria link. Select a pizza (Pick a Pizza Now button) and/or pizza size (slider).
+
+
+
+Changes made to optimize the site:
+
 
 ####Part 1: Optimize PageSpeed Insights score for index.html
 
-Some useful tips to help you get started:
+Initial Pagespeed score is about 30% on mobile and desktop
 
-1. Check out the repository
-1. To inspect the site on your phone, you can run a local server
+Made the following changes to idex.html:
 
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
+1. Set analytics.js to run asynchronously
 
-1. Open a browser and visit localhost:8080
-1. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
+2. Set media query for print style sheet
 
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ngrok 8080
-  ```
+3. For Google fonts, removed the 700 size fonts (the bold font) as it was not used.
 
-1. Copy the public URL ngrok gives you and try running it through PageSpeed Insights! Optional: [More on integrating ngrok, Grunt and PageSpeed.](http://www.jamescryer.com/2014/06/12/grunt-pagespeed-and-ngrok-locally-testing/)
+4. Optimized image sizes for profilepic.jpg, pizza.png, pizzeria.jpg
 
-Profile, optimize, measure... and then lather, rinse, and repeat. Good luck!
+5. Moved the content of style.css to "inline" (enclosed in '<script>' tags withing the index.html file) to speed loading of the initial page.
 
-####Part 2: Optimize Frames per Second in pizza.html
+Follow-up checks on the Pagespeed score indicate the largest gain from 4) Optimized images and 5) inlining the styles.css.
 
-To optimize views/pizza.html, you will need to modify views/js/main.js until your frames per second rate is 60 fps or higher. You will find instructive comments in main.js. 
+Final Pagespeed scores: 94 % Mobile; 93 % Desktop (both using Chrome Canary)
 
-You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
 
-### Optimization Tips and Tricks
-* [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
-* [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
-* [Optimizing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/optimizing-critical-rendering-path.html "optimize the crp!")
-* [Avoiding Rendering Blocking CSS](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css.html "render blocking css")
-* [Optimizing JavaScript](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript.html "javascript")
-* [Measuring with Navigation Timing](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp.html "nav timing api"). We didn't cover the Navigation Timing API in the first two lessons but it's an incredibly useful tool for automated page profiling. I highly recommend reading.
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/eliminate-downloads.html">The fewer the downloads, the better</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/optimize-encoding-and-transfer.html">Reduce the size of text</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization.html">Optimize images</a>
-* <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching.html">HTTP caching</a>
 
-### Customization with Bootstrap
-The portfolio was built on Twitter's <a href="http://getbootstrap.com/">Bootstrap</a> framework. All custom styles are in `dist/css/portfolio.css` in the portfolio repo.
 
-* <a href="http://getbootstrap.com/css/">Bootstrap's CSS Classes</a>
-* <a href="http://getbootstrap.com/components/">Bootstrap's Components</a>
+####Part 2: Optimize frame rate for views/pizza.html
 
-### Sample Portfolios
+I made the following changes to views/js/main.js:
 
-Feeling uninspired by the portfolio? Here's a list of cool portfolios I found after a few minutes of Googling.
+1. In the function (document.addEventListener('DOMContentLoaded', function() ) that generates the sliding pizza, I changed the   maximum value of i in the for loop from 200 to 20, as that seemed a sufficient numeber of sliding pizzas to be displayed on any one frame. This reduced the load time by making the function more efficient.
 
-* <a href="http://www.reddit.com/r/webdev/comments/280qkr/would_anybody_like_to_post_their_portfolio_site/">A great discussion about portfolios on reddit</a>
-* <a href="http://ianlunn.co.uk/">http://ianlunn.co.uk/</a>
-* <a href="http://www.adhamdannaway.com/portfolio">http://www.adhamdannaway.com/portfolio</a>
-* <a href="http://www.timboelaars.nl/">http://www.timboelaars.nl/</a>
-* <a href="http://futoryan.prosite.com/">http://futoryan.prosite.com/</a>
-* <a href="http://playonpixels.prosite.com/21591/projects">http://playonpixels.prosite.com/21591/projects</a>
-* <a href="http://colintrenter.prosite.com/">http://colintrenter.prosite.com/</a>
-* <a href="http://calebmorris.prosite.com/">http://calebmorris.prosite.com/</a>
-* <a href="http://www.cullywright.com/">http://www.cullywright.com/</a>
-* <a href="http://yourjustlucky.com/">http://yourjustlucky.com/</a>
-* <a href="http://nicoledominguez.com/portfolio/">http://nicoledominguez.com/portfolio/</a>
-* <a href="http://www.roxannecook.com/">http://www.roxannecook.com/</a>
-* <a href="http://www.84colors.com/portfolio.html">http://www.84colors.com/portfolio.html</a>
+2. In function updatePositions():
+  Changed querySelectorAll to getElementsByClassName as it is more efficient (has fewer elements to search).
+
+3. In function changePizzaSizes(size):
+
+    - Moved the getElements (pizzaContainers) into a variable outside of the loop so it does both need to be processed for each element re-size.
+
+    - Changed querySelectorAll to getElementsByClassName as it is more efficient (has fewer elements to search).
+
+    - These two changes take the re-size time from about 100ms to less than .50 ms, as shown in the JS console in Chrome.
+
+ After changes, I measure the following (in Chrome Canary):
+
+  - Average time to generate last 10 frames: from .0234 to .033
+  - Time to resize pizzas: .224
+
+
