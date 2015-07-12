@@ -457,7 +457,7 @@ var resizePizzas = function(size) {
     //
     // Changed querySelectorAll to getElementsByClassName as it is more efficient (has fewer elements to search).
     //
-    //These two changes take the re-size time from about 100ms to less than .50 ms, as shown in the JS console in Chrome.
+    //These changes take the re-size time from about 100ms to less than 1.2ms, as shown in the JS console in Chrome.
 
     var pizzaContainers = document.getElementsByClassName("randomPizzaContainer");
     var i = 0;
@@ -465,8 +465,6 @@ var resizePizzas = function(size) {
     var dx = determineDx(pizzaContainers[0], size);
     var newwidth = pizzaContainers[0].offsetwidth + dx + 'px';
     for ( ;  i < len; i++) {
-      //var dx = determineDx(pizzaContainers[i], size);
-      //var newwidth = pizzaContainers[i].offsetwidth + dx + 'px';
       pizzaContainers[i].style.width = newwidth;
     }
   }
@@ -542,7 +540,8 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
-//document.addEventListener('DOMContentLoaded', function() {
+
+// Changed the addEventListener to window.onload
 window.onload = function() {
   var cols = 8;
   //var rows = window.screen.height;
@@ -561,7 +560,6 @@ window.onload = function() {
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas.appendChild(elem);
-    //document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
 //});
