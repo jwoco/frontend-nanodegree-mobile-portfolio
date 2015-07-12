@@ -452,15 +452,21 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
     // Moved the getElements (pizzaContainers) into a variable outside of the loop so it does bot need to be processed for each element
     // re-size.
+    // Moved the calculation of the dx and newwidth variables outside the loop, as all the pizzas are the same size, thus do not needd
+    // to calculate each iteration.
     //
     // Changed querySelectorAll to getElementsByClassName as it is more efficient (has fewer elements to search).
     //
     //These two changes take the re-size time from about 100ms to less than .50 ms, as shown in the JS console in Chrome.
 
-    var pizzaContainers = document.getElementsByClassName(".randomPizzaContainer");
-    for (var i = 0; i < pizzaContainers.length; i++) {
-      var dx = determineDx(pizzaContainers[i], size);
-      var newwidth = pizzaContainers[i].offsetwidth + dx + 'px';
+    var pizzaContainers = document.getElementsByClassName("randomPizzaContainer");
+    var i = 0;
+    var len = pizzaContainers.length;
+    var dx = determineDx(pizzaContainers[0], size);
+    var newwidth = pizzaContainers[0].offsetwidth + dx + 'px';
+    for ( ;  i < len; i++) {
+      //var dx = determineDx(pizzaContainers[i], size);
+      //var newwidth = pizzaContainers[i].offsetwidth + dx + 'px';
       pizzaContainers[i].style.width = newwidth;
     }
   }
@@ -477,8 +483,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+// Moved the pizzaDivs variable outside the loop do DOM does not get queried each iteration.
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -511,9 +518,13 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   // Changed querySelectorAll to getElementsByClassName as it is more efficient (has fewer elements to search).
-  var items = document.getElementsByClassName('.mover');
+  // Movde calculation of top variable out of the loop to prevent DOM queery on every iteration. Declared phase varibale
+  // outside the loop, so it is not created every time the loop is executed.
+  var items = document.getElementsByClassName('mover');
+  var top = document.body.scrollTop / 1250;
+  var phase;
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    phase = Math.sin(top + i % 5);
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -531,19 +542,27 @@ function updatePositions() {
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
-document.addEventListener('DOMContentLoaded', function() {
+//document.addEventListener('DOMContentLoaded', function() {
+window.onload = function() {
   var cols = 8;
+  //var rows = window.screen.height;
+  //var screensize = cols * rows;
   var s = 256;
-  // Changed the maximum count for the i variable to <20 from <200 because the sliding pizzas in the background will never use all 200.
-  for (var i = 0; i < 20; i++) {
-    var elem = document.createElement('img');
+  var elem;
+  // Changed the maximum count for the i variable to <40 from <200 because the sliding pizzas in the background will never use all 200.
+  // Moved the variable movingPizzas outside the loop.
+  var movingPizzas = document.getElementById('movingPizzas1');
+  for (var i = 0; i < 40; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    movingPizzas.appendChild(elem);
+    //document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
-});
+//});
+};
