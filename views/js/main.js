@@ -541,17 +541,20 @@ window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 
-// Changed the addEventListener to window.onload
+// Changed the addEventListener to window.onload.
+// To generate only the amount of sliding pizzas needed for the display, changed the function to calculate the number of rows
+// and columns, and the screensize, and set the maximum count for i (sliding pizzas) to equal screen size.
 window.onload = function() {
   var cols = 8;
-  //var rows = window.screen.height;
-  //var screensize = cols * rows;
   var s = 256;
+  var h = window.screen.height;
+  var rows = h / s;
+  var screensize = cols * rows;
   var elem;
   // Changed the maximum count for the i variable to <40 from <200 because the sliding pizzas in the background will never use all 200.
   // Moved the variable movingPizzas outside the loop.
   var movingPizzas = document.getElementById('movingPizzas1');
-  for (var i = 0; i < 40; i++) {
+  for (var i = 0; i < screensize; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
